@@ -12,7 +12,7 @@ export default function CartDrawer() {
 
   const handleOrder = () => {
     closeCart();
-    router.push('/confirmation');
+    router.push('/checkout');
   };
 
   return (
