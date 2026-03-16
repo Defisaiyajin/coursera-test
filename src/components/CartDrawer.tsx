@@ -1,12 +1,19 @@
 'use client';
 
 import { useCart } from '@/lib/cart-context';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 export default function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQuantity, totalPrice } = useCart();
+  const router = useRouter();
 
   if (!isOpen) return null;
+
+  const handleOrder = () => {
+    closeCart();
+    router.push('/confirmation');
+  };
 
   return (
     <>
@@ -39,13 +46,13 @@ export default function CartDrawer() {
                   <div className="flex-1 min-w-0">
                     <h3 className="text-sm font-medium text-stone-900 truncate">{item.name}</h3>
                     <p className="text-xs text-stone-500 mt-0.5">Format : {item.format}</p>
-                    <p className="text-sm font-semibold text-stone-900 mt-1">{item.price.toFixed(2)} €</p>
+                    <p className="text-sm font-semibold text-stone-900 mt-1">{item.price.toFixed(2)} &euro;</p>
                     <div className="flex items-center gap-2 mt-2">
                       <button
                         onClick={() => updateQuantity(item.id, item.format, item.quantity - 1)}
                         className="w-7 h-7 rounded border border-stone-300 flex items-center justify-center text-stone-600 hover:bg-stone-50"
                       >
-                        −
+                        &minus;
                       </button>
                       <span className="text-sm w-6 text-center">{item.quantity}</span>
                       <button
@@ -75,9 +82,12 @@ export default function CartDrawer() {
           <div className="border-t border-stone-200 px-6 py-4 space-y-3">
             <div className="flex justify-between items-center">
               <span className="text-sm text-stone-600">Total</span>
-              <span className="text-lg font-semibold text-stone-900">{totalPrice.toFixed(2)} €</span>
+              <span className="text-lg font-semibold text-stone-900">{totalPrice.toFixed(2)} &euro;</span>
             </div>
-            <button className="w-full py-3 bg-amber-700 text-white font-medium rounded-md hover:bg-amber-800 transition-colors">
+            <button
+              onClick={handleOrder}
+              className="w-full py-3 bg-amber-700 text-white font-medium rounded-md hover:bg-amber-800 transition-colors"
+            >
               Commander
             </button>
             <button

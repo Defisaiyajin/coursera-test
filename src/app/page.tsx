@@ -7,7 +7,7 @@ import { categories, getBestSellers, getNewProducts, packs } from '@/data/produc
 import Link from 'next/link';
 
 export default function Home() {
-  const bestSellers = getBestSellers().slice(0, 4);
+  const bestSellers = getBestSellers().slice(0, 6);
   const newProducts = getNewProducts().slice(0, 4);
   const featuredPacks = packs.slice(0, 3);
 
@@ -24,8 +24,8 @@ export default function Home() {
             Tout voir →
           </Link>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {categories.slice(0, 3).map((category) => (
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6">
+          {categories.map((category) => (
             <CollectionCard key={category.id} category={category} />
           ))}
         </div>
